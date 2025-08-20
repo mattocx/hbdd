@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinjem Dulu Seratus</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ffe6e6, #fff0f5);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #e60073;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .money {
+      position: absolute;
+      top: -50px;
+      font-size: 2rem;
+      animation: fall linear infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Pinjem Dulu Seratus 💸</h1>
+
+  <script>
+    function createMoney() {
+      const money = document.createElement("div");
+      money.classList.add("money");
+      money.innerText = "💵";
+
+      money.style.left = Math.random() * window.innerWidth + "px";
+      money.style.animationDuration = (3 + Math.random() * 5) + "s";
+      document.body.appendChild(money);
+
+      setTimeout(() => {
+        money.remove();
+      }, 8000);
+    }
+
+    setInterval(createMoney, 400);
+  </script>
+</body>
+</html>

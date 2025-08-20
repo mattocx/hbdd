@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday – Ananda Citra Agustin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    
+    #bannerText { animation: slideText 5s linear forwards; }
+    @keyframes slideText {
+      from { transform: translateX(0); opacity:1; }
+      to { transform: translateX(-120vw); opacity:0; }
+    }
+    :root { --drag-scale: 1.0; }
+    html,body { height:100%; margin:0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg,#fdfbff 0%,#ffeef8 100%);
+      overflow:hidden;
+    }
+    .candle-wrapper{ pointer-events:auto; }
+    .candle-svg{ filter: drop-shadow(0 6px 18px rgba(0,0,0,.15)); }
+    .wick{ stroke:#222; stroke-width:3; stroke-linecap:round; }
+    .flame{ display:none; transform-origin:center bottom; }
+    .flame.animate .inner{ animation: flicker .22s infinite alternate; }
+    .flame.animate .outer{ animation: flicker .26s infinite alternate-reverse; }
+    @keyframes flicker {
+      from{ transform: scaleY(1.1) scaleX(1.0); opacity:.95 }
+      to  { transform: scaleY(1.3) scaleX(.85); opacity:.75 }
+    }
+    .torch{
+      touch-action:none; user-select:none; cursor:grab;
+      transform-origin:center; transition: filter .2s ease;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.25));
+    }
+    .torch:active{ cursor:grabbing; transform: scale(var(--drag-scale)); }
+    .torch .fl-outer{ animation: torchFlame .25s infinite alternate; transform-origin:center bottom; }
+    .torch .fl-inner{ animation: torchFlame .21s infinite alternate-reverse; transform-origin:center bottom; }
+    @keyframes torchFlame {
+      from{ transform: translateY(0) scaleY(1); opacity:.95 }
+      to  { transform: translateY(-1.5px) scaleY(1.12); opacity:.8 }
+    }
+    .blackout{
+      position:fixed; inset:0; pointer-events:none;
+      background: radial-gradient(220px 220px at var(--gx,50%) var(--gy,50%), rgba(255,240,195,.0) 0%, rgba(255,240,195,.06) 35%, rgba(0,0,0,.75) 70%, rgba(0,0,0,.92) 100%);
+      opacity:0; transition: opacity .6s ease;
+    }
+    .blackout.on{ opacity:1; }
+    .wish-text{ opacity:0; transform: translateY(8px); transition: .5s ease; }
+    .wish-text.show{ opacity:1; transform: translateY(0); }
+    .reveal{ animation: fadeIn .6s ease forwards; }
+    @keyframes fadeIn{ from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none} }
+    .pulse-on{ animation: pulse .9s ease-in-out infinite; }
+    @keyframes pulse{ 0%,100%{transform: scale(1)} 50%{transform: scale(1.03)} }
+    .pop-btn {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,0.2);
+      border: 2px solid white; color: white;
+      padding: 10px 20px; border-radius: 50px; cursor: pointer;
+      transition: all 0.3s; z-index: 100;
+    }
+    .pop-btn:hover { background: rgba(255,255,255,0.4); }
+    
+    /* --- Style dari Kode B (final card) --- */
+    #final-container {
+        background-color: #ffe4ec;
+        background-image: linear-gradient(to right, rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.3) 1px, transparent 1px);
+        background-size: 40px 40px;
+        font-family: 'Poppins', sans-serif;
+    }
+    .title {
+      font-family: 'Luckiest Guy', cursive;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px #fff;
+    }
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      border-radius: 50% 50% 45% 55%;
+      animation: float-b 6s ease-in-out infinite;
+    }
+    .balloon::before {
+      content: "";
+      position: absolute; top: 8px; left: 8px;
+      width: 10px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .balloon::after {
+      content: "";
+      position: absolute; bottom: -35px; left: 50%;
+      width: 2px; height: 35px;
+      background: #333;
+      transform: translateX(-50%) rotate(10deg);
+    }
+    @keyframes float-b {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-25px); }
+      100% { transform: translateY(0); }
+    }
+    .party-hat {
+      position: absolute; top: -46px; right: -4px;
+      width: 90px; height: 90px;
+      transform: rotate(18deg);
+      clip-path: polygon(50% 0, 0 100%, 100% 100%);
+      background: repeating-linear-gradient(-20deg, #ff4d6d 0 10px, #ffd6e5 10px 20px);
+      filter: drop-shadow(0 5px 5px rgba(0,0,0,.15));
+    }
+    .party-hat::before {
+      content: "";
+      position: absolute; top: -12px; left: 50%;
+      transform: translateX(-50%);
+      width: 22px; height: 22px;
+      background: radial-gradient(circle at 30% 30%, #fff, #ffd166 60%, #ffb703 100%);
+      border-radius: 9999px;
+      box-shadow: 0 0 0 3px rgba(255,255,255,.6);
+    }
+    .party-hat::after {
+      content: "";
+      position: absolute; bottom: -5px; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 10px;
+      background: #ffffff;
+      border-radius: 999px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    }
+    @media (max-width: 640px) {
+      .title { font-size: 2.5rem; }
+      .party-hat { width: 65px; height: 65px; top: -34px; }
+      .party-hat::before { width: 16px; height: 16px; }
+      .party-hat::after { width: 45px; height: 8px; }
+      #bunting { height: 90px; }
+    }
+    
+    /* Tambahan untuk balloon dari kode A agar bisa muncul di Final Section */
+    .balloon-a {
+      position: absolute;
+      width: 120px;
+      height: 140px;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      animation: float-a 8s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px currentColor);
+    }
+    .balloon-a-body {
+      position: relative; width: 100%; height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, var(--balloon-color) 70%);
+      overflow: hidden;
+    }
+    .balloon-a-shine {
+      position: absolute; top: 15%; left: 20%; width: 30%; height: 30%;
+      background: rgba(255,255,255,0.4); border-radius: 50%; filter: blur(5px);
+      transform: rotate(30deg);
+    }
+    .balloon-a-string {
+      position: absolute; bottom: -50px; left: 50%; width: 2px; height: 80px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.8), transparent);
+      transform: translateX(-50%) rotate(0.5deg);
+    }
+    @keyframes float-a {
+      0%, 100% { transform: translateY(0) rotate(1deg); }
+      50% { transform: translateY(-30px) rotate(-1deg); }
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="bannerText" class="fixed top-4 left-full text-xl font-semibold text-pink-600 whitespace-nowrap">
+    🔥 Nyalakan lilinnya pakai obor ✨
+  </div>
+
+  <section id="stage" class="relative w-full h-full">
+    <div id="candleWrap" class="candle-wrapper absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <svg id="candleSvg" class="candle-svg" viewBox="-45 -110 90 220" width="120" height="240" aria-label="lilin">
+        <rect x="-26" y="-70" width="52" height="140" rx="10" fill="#fff4d6" stroke="#e8dec7" stroke-width="2"/>
+        <path d="M -26 -70 Q -13 -84 0 -70 Q 13 -56 26 -70" fill="#fff9e8" opacity=".9"/>
+        <line id="wick" class="wick" x1="0" y1="-70" x2="0" y2="-90"/>
+        <g id="candleFlame" class="flame">
+          <path class="outer" d="M 0 -92 C -22 -135, 22 -135, 0 -92 Z" fill="orange"/>
+          <path class="inner" d="M 0 -88 C -12 -122, 12 -122, 0 -88 Z" fill="gold"/>
+        </g>
+      </svg>
+    </div>
+
+    <div id="torch" class="absolute right-4 bottom-4 torch select-none" aria-label="obor">
+      <svg viewBox="-25 -120 50 170" width="90" height="140">
+        <ellipse cx="0" cy="-60" rx="12" ry="7" fill="#3a1e0c"/>
+        <rect x="-5" y="-60" width="10" height="90" rx="4" fill="#6b3d1c"/>
+        <path class="fl-outer" d="M 0 -96 C -14 -128, 14 -128, 0 -96 Z" fill="#ff7a1a"/>
+        <path class="fl-inner" d="M 0 -92 C -9 -116, 9 -116, 0 -92 Z" fill="#ffd86b"/>
+      </svg>
+    </div>
+
+    <div id="blackout" class="blackout"></div>
+
+    <div id="wish" class="wish-text absolute left-1/2 top-[calc(50%+170px)] -translate-x-1/2 text-center">
+      <p class="text-xl md:text-2xl text-white/90 tracking-wide">Make a wish…</p>
+      <p class="text-sm md:text-base text-white/70">Lalu klik lilinnya ✨</p>
+    </div>
+
+    <div id="balloons-container"></div>
+    <button class="pop-btn hidden" id="addBalloonBtn">klik ini dulu berkali" </button>
+  </section>
+
+  <section id="final" class="hidden">
+    <div id="final-container" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <svg id="bunting" class="absolute top-0 left-0 w-full h-[140px] sm:h-[120px] z-20 pointer-events-none" viewBox="0 0 1000 200" preserveAspectRatio="none">
+        <path id="rope" d="M 40 60 C 320 10, 680 160, 960 60" fill="none" stroke="#f5a3b8" stroke-width="4" stroke-linecap="round" />
+        <g id="flags"></g>
+      </svg>
+    
+      <div class="flex flex-col md:flex-row items-center justify-between w-full max-w-5xl px-4 sm:px-6 z-10 gap-8">
+        
+        <div class="text-center md:text-left space-y-4">
+          <h1 class="title text-4xl sm:text-6xl leading-tight">
+            Happy <br>
+            <span class="text-pink-600">Birthday</span> 
+          </h1>
+          <p class="bg-pink-500 text-white px-6 py-2 rounded-full font-semibold inline-block shadow text-sm sm:text-base">
+            21 Agustus 1999
+          </p>
+          <button onclick="window.location.href='pinjem.html'" 
+            class="mt-2 bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-2 rounded-full shadow-md transition-transform hover:scale-105 text-sm sm:text-base">
+            Klik Ya
+          </button>
+        </div>
+    
+        <div class="flex flex-col items-center relative">
+          <div class="party-hat"></div>
+          <div class="w-40 h-40 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-pink-500 shadow-lg flex items-center justify-center bg-yellow-100 relative">
+            <img src="image.png" alt="Foto" class="w-full h-full object-cover">
+          </div>
+          <p class="mt-3 sm:mt-4 bg-pink-300 px-4 py-1 rounded-full text-gray-800 font-semibold text-sm sm:text-base">
+            Ananda Citra Agustin
+          </p>
+        </div>
+      </div>
+    
+      <div class="absolute bottom-16 sm:bottom-20 left-1/2 transform -translate-x-1/2 text-4xl sm:text-5xl">☺️</div>
+    
+      <div class="balloon bg-pink-400 left-1/6 bottom-10"></div>
+      <div class="balloon bg-pink-300 left-1/2 bottom-20" style="animation-delay:1s"></div>
+      <div class="balloon bg-pink-500 left-3/4 bottom-14" style="animation-delay:2s"></div>
+    </div>
+    <div id="confettiAfter" class="pointer-events-none fixed inset-0"></div>
+  </section>
+
+  <audio id="birthdaySong" src="hbd.mp3"></audio>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const torch = $('#torch');
+    const wick = $('#wick');
+    const flame = $('#candleFlame');
+    const blackout = $('#blackout');
+    const wish = $('#wish');
+    const addBalloonBtn = $('#addBalloonBtn');
+    const birthdaySong = $('#birthdaySong');
+
+    let dragging = false;
+    let torchPos = {x: 0, y: 0};
+
+    function getTorchHeadCenter(el){
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width/2, y: r.top + r.height*0.18 };
+    }
+    function getWickTip(){
+      const r = wick.getBoundingClientRect();
+      return { x: r.left + r.width/2, y: r.top };
+    }
+    function setTorchTranslate(x,y){
+      torch.style.left = (x)+'px';
+      torch.style.top  = (y)+'px';
+      torch.style.right = 'auto';
+      torch.style.bottom = 'auto';
+      torch.style.position = 'absolute';
+    }
+    function pointerDown(e){
+      dragging = true;
+      const p = getPointer(e);
+      const rect = torch.getBoundingClientRect();
+      torchPos.offsetX = p.x - rect.left;
+      torchPos.offsetY = p.y - rect.top;
+      document.addEventListener('pointermove', pointerMove);
+      document.addEventListener('pointerup', pointerUp);
+    }
+    function pointerMove(e){
+      if(!dragging) return;
+      const p = getPointer(e);
+      const x = p.x - torchPos.offsetX;
+      const y = p.y - torchPos.offsetY;
+      setTorchTranslate(x,y);
+      checkIgnite();
+    }
+    function pointerUp(){
+      dragging = false;
+      document.removeEventListener('pointermove', pointerMove);
+      document.removeEventListener('pointerup', pointerUp);
+    }
+    function getPointer(e){
+      if(e.touches && e.touches[0]) return {x:e.touches[0].clientX, y:e.touches[0].clientY};
+      return {x:e.clientX, y:e.clientY};
+    }
+    torch.addEventListener('pointerdown', pointerDown);
+
+    let lit = false;
+    function checkIgnite(){
+      if(lit) return;
+      const head = getTorchHeadCenter(torch);
+      const wt = getWickTip();
+      const dx = head.x - wt.x;
+      const dy = head.y - wt.y;
+      const dist = Math.hypot(dx,dy);
+      if(dist < 26){ ignite(); }
+    }
+
+    function ignite(){
+      lit = true;
+      flame.style.display = 'block';
+      flame.classList.add('animate');
+      torch.classList.add('opacity-0','transition','duration-300');
+      setTimeout(()=> torch.remove(), 320);
+      positionGlowToWick();
+      blackout.classList.add('on');
+      wish.classList.add('show');
+      $('#candleSvg').classList.add('pulse-on');
+      $('#candleWrap').style.cursor = 'pointer';
+
+      // 🔊 Putar Lagu Happy Birthday
+      birthdaySong.play();
+
+      // 🎈 Tampilkan tombol balon
+      addBalloonBtn.classList.remove('hidden');
+    }
+
+    function positionGlowToWick(){
+      const wt = getWickTip();
+      document.documentElement.style.setProperty('--gx', wt.x+'px');
+      document.documentElement.style.setProperty('--gy', wt.y+'px');
+    }
+    window.addEventListener('resize', ()=>{ if(lit) positionGlowToWick(); });
+
+    $('#candleWrap').addEventListener('click', ()=>{
+      if(!lit) return;
+      $('#stage').classList.add('opacity-0','transition','duration-500','pointer-events-none');
+      setTimeout(()=>{
+        $('#stage').classList.add('hidden');
+        $('#final').classList.remove('hidden');
+        launchConfetti();
+      }, 520);
+    });
+
+    function launchConfetti(){
+      const conf = $('#confettiAfter');
+      const colors = ['#ff7676','#74b9ff','#55efc4','#ffeaa7','#a29bfe','#fd79a8','#fbc531','#e17055'];
+      for(let i=0;i<70;i++){
+        const p = document.createElement('div');
+        p.style.position='absolute';
+        p.style.top = '-6vh';
+        p.style.left = Math.random()*100+'%';
+        const s = 6 + Math.random()*8;
+        p.style.width = s+'px';
+        p.style.height = s+'px';
+        p.style.background = colors[Math.floor(Math.random()*colors.length)];
+        p.style.opacity = .95;
+        p.style.transform = `rotate(${Math.random()*360}deg)`;
+        p.style.borderRadius = Math.random()>.5?'2px':'50%';
+        const dur = 6 + Math.random()*4;
+        const delay = Math.random()*1.2;
+        p.style.animation = `fall ${dur}s ${delay}s linear forwards`;
+        conf.appendChild(p);
+      }
+    }
+    const style = document.createElement('style');
+    style.textContent = `@keyframes fall{ to{ transform: translateY(110vh) rotate(720deg); opacity:0 } }`;
+    document.head.appendChild(style);
+
+    // 🎈 Fungsi balon (dari kode A)
+    const balloonColors = ['#FF00FF','#00FFFF','#FFFF00','#FF9900','#00FF99','#9900FF','#FF0099','#00FF00','#FF6600','#0099FF','#FF0066','#66FF00'];
+    function createBalloon(x, y){
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon-a';
+      const color = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+      balloon.style.setProperty('--balloon-color', color);
+      balloon.style.left = `${x || Math.random() * 100}%`;
+      balloon.style.top = `${y || Math.random() * 100 + 100}%`;
+      balloon.style.animationDelay = `${Math.random() * 3}s`;
+      balloon.innerHTML = `<div class="balloon-a-body"><div class="balloon-a-shine"></div></div><div class="balloon-a-string"></div>`;
+      balloon.addEventListener('mouseenter',()=>{ balloon.style.animation='sway 0.5s ease-in-out infinite'; });
+      balloon.addEventListener('mouseleave',()=>{ balloon.style.animation='float-a 8s ease-in-out infinite'; });
+      document.getElementById('balloons-container').appendChild(balloon);
+    }
+    addBalloonBtn.addEventListener('click', ()=>{ createBalloon(Math.random()*100, Math.random()*100); });
+    
+    // Fungsi bendera dari Kode B
+    (function () {
+      const rope = document.getElementById('rope');
+      const group = document.getElementById('flags');
+      if (!rope || !group) return;
+      const total = rope.getTotalLength();
+      const spacing = 90;
+      const w = 30;
+      const h = 45;
+      const colors = ['#f472b6', '#ec4899'];
+      let idx = 0;
+      for (let d = 80; d < total - 80; d += spacing) {
+        const p = rope.getPointAtLength(d);
+        const p2 = rope.getPointAtLength(Math.min(d + 1, total));
+        const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI + 90;
+        const tri = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        tri.setAttribute('points', `0,0 ${-w/2},${h} ${w/2},${h}`);
+        tri.setAttribute('fill', colors[idx % colors.length]);
+        tri.setAttribute('opacity', '0.98');
+        tri.setAttribute('transform', `translate(${p.x},${p.y}) rotate(${angle})`);
+        group.appendChild(tri);
+        idx++;
+      }
+    })();
+  </script>
+</body>
+</html>
